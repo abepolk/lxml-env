@@ -1,8 +1,9 @@
+BUCKET_NAME=$(curl http://metadata.google.internal/computeMetadata/v1/instance/attributes/bucket_name -H "Metadata-Flavor: Google")
+
+# TODO make the following comment possible for a startup script
 # To be sourced, not sh'ed
 
-# Builds lxml and its dependences on a GCP Debian VM,
-# and opens an interactive Python session where you can use lxml in-place
-
+# Build lxml and its dependences
 sudo apt install autoconf build-essential gcc git libtool pkg-config python3-dev python3-venv -y
 cd $HOME
 git clone https://gitlab.gnome.org/GNOME/libxml2.git
@@ -27,3 +28,6 @@ python3 setup.py build_ext -i --with-cython --with-xml2-config=$HOME/libxml2/xml
 alias lxmlpython='PYTHONPATH=$HOME/lxml/src LD_LIBRARY_PATH=/usr/local/lib python3'
 
 # TODO add aliases for pushing and pulling Git patches
+pushpatch () {
+    git diff | gsutil cp - gs://$BUCKET_NAME/$1.patch
+}
