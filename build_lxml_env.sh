@@ -24,10 +24,17 @@ git clone https://github.com/lxml/lxml.git
 cd $HOME/lxml/
 pip3 install -r requirements.txt
 python3 setup.py build_ext -i --with-cython --with-xml2-config=$HOME/libxml2/xml2-config --with-xslt-config=$HOME/libxslt/xslt-config
+# Deactivate if this is sh'ed and if that means that we can't keep it active anyway.
+
+# Possibly leave some marker, like VM metadata, to say if this script has already run on the instance. I could put this at the
+# start or end of this script.
 
 alias lxmlpython='PYTHONPATH=$HOME/lxml/src LD_LIBRARY_PATH=/usr/local/lib python3'
 
-# TODO add aliases for pushing and pulling Git patches
 pushpatch () {
-    git diff | gsutil cp - gs://$BUCKET_NAME/$1.patch
+    git diff | gsutil cp - gs://$BUCKET_NAME/$1
+}
+
+pullpatch () {
+    gsutil cp gs://$BUCKET_NAME/$1 - | git apply -
 }

@@ -20,8 +20,7 @@ provider "google" {
     project = var.project_id
 }
 
-# I may not need the bucket for a startup script - just put the script in metadata defined in this template
-# TODO comment out storage buckets and the script to be put into the bucket
+# I may not need the startup script bucket for a startup script - just put the script in metadata defined in this template
 
 # resource "random_id" "startup_script_bucket_id" {
 #  byte_length = 8
@@ -91,6 +90,10 @@ resource "google_compute_region_instance_template" "instance_template" {
     }
 }
 
+resource "google_service_account" "default" {
+    account_id = "patch-access-service-account
+}
+
 resource "google_storage_bucket_iam_binding" "binding" {
     bucket = google_storage_bucket.patch_bucket.name
     # I THINK this role is right - it's what I used in the console before
@@ -100,6 +103,7 @@ resource "google_storage_bucket_iam_binding" "binding" {
     ]
 }
 
-# As a final note about this template, I will want store Terraform state carefully (in a GCS bucket),
-# in case I want to update the startup script
+# As a final note about this template, I will want to store Terraform state carefully (in a GCS bucket),
+# in case, for example, I want to update the startup script
 # without getting rid of the bucket containing all of the Git patches
+# (meaning to use Terraform's apply without using destroy first)
