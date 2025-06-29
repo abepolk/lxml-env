@@ -60,6 +60,7 @@ resource "google_storage_bucket" "patch_bucket" {
 }
 
 resource "google_compute_region_instance_template" "instance_template" {
+    name = "lxml-development-vm"
     disk {
         # Note: if this template is being used after the end of Debian 12 LTS support on June 30, 2028, this would have to be updated to a later OS
         source_image = "family/debian-12"
