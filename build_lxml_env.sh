@@ -4,7 +4,7 @@ BUCKET_NAME=$(curl http://metadata.google.internal/computeMetadata/v1/instance/a
 # To be sourced, not sh'ed
 
 # Build lxml and its dependences
-apt install autoconf build-essential gcc git libtool pkg-config python3-dev python3-venv -y
+apt install -y autoconf build-essential gcc git libtool pkg-config python3-dev python3-venv -y
 cd /
 git clone https://gitlab.gnome.org/GNOME/libxml2.git
 cd /libxml2/
