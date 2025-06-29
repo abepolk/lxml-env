@@ -91,7 +91,7 @@ resource "google_compute_region_instance_template" "instance_template" {
 }
 
 resource "google_service_account" "default" {
-    account_id = "patch-access-service-account
+    account_id = "patch-access-service-account"
 }
 
 resource "google_storage_bucket_iam_binding" "binding" {
