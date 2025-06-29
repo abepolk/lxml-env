@@ -18,6 +18,7 @@ variable "project_id" {
 
 provider "google" {
     project = var.project_id
+    region = "us-central1"
 }
 
 # I may not need the startup script bucket for a startup script - just put the script in metadata defined in this template
